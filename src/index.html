@@ -55,7 +55,7 @@
 		// import sheetDataVerification from './demoData/sheetDataVerification.js'
 
 
-		$(function () {
+        $(function () {
 
 			// According to the browser language
 			var lang = luckysheetDemoUtil.language() === 'zh' ? 'zh' : 'en';
@@ -76,7 +76,14 @@
 					updateUrl: "ws://" + location.host + "/luckysheet/websocket/luckysheet",
 					gridKey: gridKey,
 					loadUrl: location.origin + "/luckysheet/api/load",
-					loadSheetUrl: location.origin + "/luckysheet/api/loadsheet"
+					loadSheetUrl: location.origin + "/luckysheet/api/loadsheet",
+                    hook: {
+                        workbookCreateAfter: function (json) {
+                            // console.info(json)
+                            console.log('go');
+                            window.luckysheet.setCellReadOnly(1,1);
+                        },
+                    }
 				}
 			} else {
 				// http://localhost:3000/
@@ -132,10 +139,13 @@
 							// console.log(postion);
 						},
 						cellMousedownBefore: function (cell, postion, sheetFile, ctx) {
-							// console.log(postion);
+							console.log('cellMousedownBefore1', cell, postion, sheetFile, ctx);
+                            // if (cell.extend.readOnly){
+                            //     window.luckysheet.setCellRightMenu({paste:false});
+                            // }
 						},
 						cellMousedown: function (cell, postion, sheetFile, ctx) {
-							// console.log(sheetFile);
+							console.log('cellMousedown', cell, postion, sheetFile, ctx);
 						},
 						sheetMousemove: function (cell, postion, sheetFile, moveState, ctx) {
 							// console.log(cell,postion,sheetFile,moveState,ctx);
@@ -150,7 +160,7 @@
 							// console.info(operate)
 						},
 						cellUpdateBefore: function (r, c, value, isRefresh) {
-							// console.info('cellUpdateBefore',r,c,value,isRefresh)
+							console.info('cellUpdateBefore',r,c,value,isRefresh)
 						},
 						cellUpdated: function (r, c, oldValue, newValue, isRefresh) {
 							// console.info('cellUpdated',r,c,oldValue, newValue, isRefresh)
@@ -182,8 +192,15 @@
 						cellEditBefore: function (range) {
 							// console.info(range)
 						},
+                        workbookCreateBefore: function (json) {
+                            // console.info(json)
+                            console.log('go');
+                            window.luckysheet.setCellReadOnly(1,1);
+                        },
 						workbookCreateAfter: function (json) {
 							// console.info(json)
+                            console.log('go');
+                            window.luckysheet.setCellReadOnly(1,1);
 						},
 						rangePasteBefore: function (range, data) {
 							// console.info('rangePasteBefore',range,data)
@@ -1912,8 +1929,11 @@
 			//      "pivotTable": null,
 			//      "isPivotTable": false
 			//  };
-			//  luckysheet.sheetmanage.setCustomSheet(customSheetconfig);
+			//  luckysheet.sheetmanage.setCustomSheet(customSheetc`onfig);
 			luckysheet.create(options);
+            setTimeout(() => {
+                window.luckysheet.setCellReadOnly(0,0);
+            }, 5000)
 		})
 	</script>
 	<style>

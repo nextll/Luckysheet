@@ -19,6 +19,9 @@ function setcellvalue(r, c, d, v) {
     if (getObjType(v) == "object") {
         if (cell == null) {
             cell = v;
+            if (!v.extend) {
+                cell.extend = {};
+            }
         } else {
             if (v.f != null) {
                 cell.f = v.f;
@@ -32,6 +35,12 @@ function setcellvalue(r, c, d, v) {
 
             if (v.ct != null) {
                 cell.ct = v.ct;
+            }
+
+            if (v.extend != null) {
+                cell.extend = v.extend;
+            } else {
+                cell.extend = {};
             }
         }
 

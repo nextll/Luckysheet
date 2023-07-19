@@ -6948,3 +6948,25 @@ export function openSearchDialog(source = 1){
     luckysheetSearchReplace.init();
     $("#luckysheet-search-replace #searchInput input").focus();
 }
+
+/**
+ * 设置指定单元格为只读
+ * @param {Number} row 只读单元格的行号
+ * @param {Number} column   只读单元格的列号
+ */
+export function setCellReadOnly(row, column){
+    let rangValue = getRangeValue()[0][0];
+    if (rangValue){
+        rangValue.extend.readOnly = true;
+    }
+    setCellValue(row, column, rangValue);
+}
+
+/**
+ * 修改单元格的菜单配置项
+ * @param {Object} changeMenuConfig 要处理的单元格
+ */
+export function setCellRightMenu(changeMenuConfig){
+    luckysheetConfigsetting.cellRightClickConfigCustom = Object.assign(luckysheetConfigsetting.cellRightClickConfig, changeMenuConfig);
+    luckysheetConfigsetting.cellRightClickConfigCustom.enable = true;
+}

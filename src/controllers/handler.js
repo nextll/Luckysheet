@@ -70,6 +70,7 @@ import Store from "../store";
 import { createLuckyChart, hideAllNeedRangeShow } from "../expendPlugins/chart/plugin";
 import luckysheetformula from "../global/formula";
 import {createExportDialog,fetchAndDownloadXlsx} from "../expendPlugins/exportXlsx/plugin";
+import {getRangeValue} from "../global/api";
 
 //, columeflowset, rowflowset
 export default function luckysheetHandler() {
@@ -1552,7 +1553,16 @@ export default function luckysheetHandler() {
                     $$("#luckysheet-cols-rows-data .luckysheet-menuseparator").style.display = "none";
                 }
 
+                // 增加方法
+                if (luckysheetConfigsetting.cellRightClickConfigCustom.enable) {
+                    if (!luckysheetConfigsetting.cellRightClickConfigCustom.paste) {
+                        $("#luckysheet-copy-paste").hide();
+                    }
+                }
+
                 showrightclickmenu($("#luckysheet-rightclick-menu"), x, y);
+
+                luckysheetConfigsetting.cellRightClickConfigCustom = {};
             }
 
             // 备注：在mousedown中发送光标信息会漏处理部分(选区)范围
@@ -1565,6 +1575,12 @@ export default function luckysheetHandler() {
 
             //禁止前台编辑(只可 框选单元格、滚动查看表格)
             if (!Store.allowEdit) {
+                return;
+            }
+
+            //根据单元格绑定属性expand，判断是否禁止单元格编辑
+            let rangValue = getRangeValue()[0][0];
+            if (rangValue && rangValue.extend.readOnly){
                 return;
             }
 
