@@ -433,9 +433,9 @@ window.sheetDataVerification = {
         },
         "6_5": {
             "type": "date",
-            "type2": "bw",
+            "type2": "naf",
             "value1": "2020-09-23",
-            "value2": "2020-10-10",
+            "value2": "",
             "checked": false,
             "remote": false,
             "prohibitInput": false,

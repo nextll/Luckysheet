@@ -1377,6 +1377,18 @@ let nullCellRender = function(
         luckysheetTableContent.closePath();
     }
 
+    //若单元格给予标注（单元格显示给定的三角标识）
+    let cell = Store.flowdata[r][c];
+    if (cell && cell.mark && cell.mark.color) {
+        luckysheetTableContent.beginPath();
+        luckysheetTableContent.lineWidth = 10;
+        luckysheetTableContent.strokeStyle  = cell.mark.color;
+        luckysheetTableContent.moveTo(start_c + offsetLeft -1, end_r + offsetTop + bodrder05);
+        luckysheetTableContent.lineTo(end_c + offsetLeft, end_r + offsetTop + bodrder05);
+        luckysheetTableContent.stroke();
+        luckysheetTableContent.closePath();
+    }
+
     // 单元格渲染后
     method.createHookFunction(
         "cellRenderAfter",
@@ -1514,6 +1526,18 @@ let cellRender = function(
         luckysheetTableContent.lineTo(end_c + offsetLeft, start_r + offsetTop + ps_h);
         luckysheetTableContent.fillStyle = "#FC6666";
         luckysheetTableContent.fill();
+        luckysheetTableContent.closePath();
+    }
+
+    //若单元格给予标注（单元格显示给定的三角标识）
+    if (cell.mark && cell.mark.color) {
+
+        luckysheetTableContent.beginPath();
+        luckysheetTableContent.lineWidth = 10;
+        luckysheetTableContent.strokeStyle  = cell.mark.color;
+        luckysheetTableContent.moveTo(start_c + offsetLeft -1, end_r + offsetTop + bodrder05);
+        luckysheetTableContent.lineTo(end_c + offsetLeft, end_r + offsetTop + bodrder05);
+        luckysheetTableContent.stroke();
         luckysheetTableContent.closePath();
     }
 
