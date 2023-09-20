@@ -34,7 +34,9 @@
     "vuepress-plugin-baidu-autopush": "^1.0.1",
     "vuepress-plugin-code-copy": "^1.0.6",
     "vuepress-plugin-seo": "^0.1.4",
-    "vuepress-plugin-sitemap": "^2.3.1"
+    "vuepress-plugin-sitemap": "^2.3.1",
+    "@vitejs/plugin-vue": "^2.2.0",
+    "vite": "^2.8.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
@@ -44,7 +46,10 @@
     "flatpickr": "^4.6.6",
     "jquery": "^2.2.4",
     "numeral": "^2.0.6",
-    "pako": "^1.0.11"
+    "pako": "^1.0.11",
+    "exceljs": "^4.3.0",
+    "file-saver": "^2.0.5",
+    "vue": "^3.2.25"
   },
   "scripts": {
     "build": "cross-env NODE_ENV=production gulp build",
@@ -54,7 +59,10 @@
     "commit": "git-cz",
     "release": "standard-version",
     "prettier": "npx prettier --check .",
-    "prettier:fix": "npx prettier -w ."
+    "prettier:fix": "npx prettier -w .",
+    "vite-dev": "vite",
+    "vite-build": "vite build",
+    "vite-preview": "vite preview"
   },
   "files": [
     "dist"
