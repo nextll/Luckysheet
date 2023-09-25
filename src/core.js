@@ -1,3 +1,4 @@
+import './utils/math'
 import defaultSetting from "./config.js";
 import { common_extend } from "./utils/util";
 import Store from "./store";
