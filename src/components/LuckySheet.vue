@@ -145,21 +145,7 @@ const downloadExcel = () => {
 onMounted(() => {
   let sheetConfig = props.sheetConfig;
   sheetConfig.container = 'luckysheet';
-  sheetConfig.cellRightClickConfig = {
-    customs: [{
-      title: '保存',
-      onClick: function (clickEvent, event, params) {
-        console.log(LuckyExcel.getAllSheets())
-        let saveInfo = JSON.stringify(LuckyExcel.getAllSheets());  //将JSON转为字符串存到变量里
-        localStorage.setItem("sheetSave",saveInfo);//将变量存到localStorage里
-      }
-    }]
-  };
-  if (localStorage.getItem("sheetSave")){
-    let saveInfo = JSON.parse(localStorage.getItem("sheetSave"));
-    sheetConfig.data[0] = saveInfo[0];
-  }
-  LuckyExcel.create(sheetConfig)
+  LuckyExcel.create(sheetConfig);
 })
 </script>
 
