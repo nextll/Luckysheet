@@ -1097,6 +1097,7 @@ export function insertRowOrColumn(type, index = 0, options = {}) {
     let {
         number = 1,
         order = curSheetOrder,
+        needFocus = true,
         success
     } = {...options}
 
@@ -1129,7 +1130,7 @@ export function insertRowOrColumn(type, index = 0, options = {}) {
         }
     }
 
-    luckysheetextendtable(type, index, number, "lefttop", sheetIndex);
+    luckysheetextendtable(type, index, number, "lefttop", sheetIndex, needFocus);
 
     if (success && typeof success === 'function') {
         success();

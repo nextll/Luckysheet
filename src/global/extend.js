@@ -21,7 +21,7 @@ import method from "./method";
  * @param {string | number} sheetIndex 操作的 sheet 的 index 属性
  * @returns
  */
-function luckysheetextendtable(type, index, value, direction, sheetIndex) {
+function luckysheetextendtable(type, index, value, direction, sheetIndex, needFocus) {
     sheetIndex = sheetIndex ?? Store.currentSheetIndex;
 
     if (type == "row" && !checkProtectionAuthorityNormal(sheetIndex, "insertRows")) {
@@ -897,32 +897,36 @@ function luckysheetextendtable(type, index, value, direction, sheetIndex) {
         }
     }
 
-    file.luckysheet_select_save = range;
-    if (file.index == Store.currentSheetIndex) {
-        Store.luckysheet_select_save = range;
-        selectHightlightShow();
-    }
-
-    if (type == "row") {
-        let scrollLeft = $("#luckysheet-cell-main").scrollLeft(),
-            scrollTop = $("#luckysheet-cell-main").scrollTop();
-        let winH = $("#luckysheet-cell-main").height(),
-            winW = $("#luckysheet-cell-main").width();
-
-        let row = Store.visibledatarow[range[0].row[1]],
-            row_pre = range[0].row[0] - 1 == -1 ? 0 : Store.visibledatarow[range[0].row[0] - 1];
-
-        if (row - scrollTop - winH + 20 > 0) {
-            $("#luckysheet-scrollbar-y").scrollTop(row - winH + 20);
-        } else if (row_pre - scrollTop - 20 < 0) {
-            $("#luckysheet-scrollbar-y").scrollTop(row_pre - 20);
+    // 如果方法调用，表示不将焦点定位到新增行/列，则下列方法不执行。
+    if (needFocus){
+        file.luckysheet_select_save = range;
+        if (file.index == Store.currentSheetIndex) {
+            Store.luckysheet_select_save = range;
+            selectHightlightShow();
         }
 
-        if (value > 30) {
-            $("#luckysheet-row-count-show").hide();
-            $("#luckysheet-column-count-show").hide();
+        if (type == "row") {
+            let scrollLeft = $("#luckysheet-cell-main").scrollLeft(),
+                scrollTop = $("#luckysheet-cell-main").scrollTop();
+            let winH = $("#luckysheet-cell-main").height(),
+                winW = $("#luckysheet-cell-main").width();
+
+            let row = Store.visibledatarow[range[0].row[1]],
+                row_pre = range[0].row[0] - 1 == -1 ? 0 : Store.visibledatarow[range[0].row[0] - 1];
+
+            if (row - scrollTop - winH + 20 > 0) {
+                $("#luckysheet-scrollbar-y").scrollTop(row - winH + 20);
+            } else if (row_pre - scrollTop - 20 < 0) {
+                $("#luckysheet-scrollbar-y").scrollTop(row_pre - 20);
+            }
+
+            if (value > 30) {
+                $("#luckysheet-row-count-show").hide();
+                $("#luckysheet-column-count-show").hide();
+            }
         }
     }
+
 }
 
 function luckysheetextendData(rowlen, newData) {
