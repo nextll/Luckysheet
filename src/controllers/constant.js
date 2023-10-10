@@ -375,7 +375,7 @@ function rightclickHTML() {
 
     const customsButtons = (config.customs || [])
         .map(
-            (item, index) => `
+            (item, index) => item.type === 'separator' ? `<div class="luckysheet-menuseparator luckysheet-mousedown-cancel" role="separator" style="display:block;"></div>` : `
             <div data-index="${index}" class="luckysheetColsRowsHandleAdd_custom luckysheet-cols-menuitem luckysheet-mousedown-cancel">
                 <div class="luckysheet-cols-menuitem-content luckysheet-mousedown-cancel">
                 ${item.title}
@@ -618,6 +618,9 @@ function rightclickHTML() {
                             toolbar.cellFormat
                         }</div>
                     </div>
+                </div>
+                <div id="luckysheet-cols-rows">
+                    <div class="luckysheet-menuseparator luckysheet-mousedown-cancel" role="separator" style="display:${config.sort ? "block" : "none"};"></div>
                     ${customsButtons}
                 </div>
             </div>
