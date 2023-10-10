@@ -2,77 +2,74 @@
 <template>
 
   <input type="button" value="绑定">
-  <LuckySheet :sheet-config='sheetConfig' />
+  <rowFillMenu ref="rowFillMenuRef" :ls-doc-instance='fillDocInstance'/>
+  <LuckySheet :sheet-config='_sheetConfig' />
 
 </template>
 
-<script setup>
-
+<script setup lang="ts">
+//---------> import
 import {ref} from 'vue'
-import LuckySheet from '../components/LuckySheet.vue'
-import {luckysheet as LuckyExcel} from "../core";
+import LuckySheet from '../components/LuckySheet.vue';
+import {FillModelConfigger} from "./sheetDefaultConfig/fillModelConfigger";
+import designModelSheetDefaultConfig from "./sheetDefaultConfig/designConfigger";
 
-let sheetData = [{
-      "name": "Sheet1",
-      color: "",
-      "status": "1",
-      "order": "0",
-      "data": [],
-      "config": {},
-      "index": 0
-    }]; //客户端sheet数据[sheet1, sheet2, sheet3]
+import rowFillMenu from './sheetDefaultConfig/rowFillMenu.vue';
+//<--------- import
 
-// localStorage.sheetData;
 
-// 表格_luckySheet配置信息_变量
-const sheetConfig = ref({
-  lang: 'zh',
-  hook: {
-    rangeSelect: function (index, sheet) {
-      console.info(index)
-      console.info(sheet)
-    },
-  },
-  cellRightClickConfig : {
-    customs: [{
-      title: '保存',
-      onClick: function (clickEvent, event, params) {
-        console.log(LuckyExcel.getAllSheets())
-        let saveInfo = JSON.stringify(LuckyExcel.getAllSheets());  //将JSON转为字符串存到变量里
-        localStorage.setItem("sheetSave",saveInfo);//将变量存到localStorage里
-      }
-    },{
-      title: '设置为填报单元格',
-      onClick: function (clickEvent, event, params) {
-        console.log(LuckyExcel.getAllSheets())
-        setupFileCells(clickEvent, event, params);
-      }
-    },{
-      title: localStorage.getItem('model') === 'fillModel'? '切换到设计模式' : '切换到填报模式',
-      onClick: function (clickEvent, event, params) {
-        localStorage.setItem("model",localStorage.getItem("model") === "fillModel"? "designModel" : "fillModel");//将变量存到localStorage里
-        location.reload();
-      }
-    }]
-  },
-  data: function () {
-    if (localStorage.getItem("sheetSave")){
-      return JSON.parse(localStorage.getItem("sheetSave"));
-    }
-  }(),
-});
+//---------> ref
+// 行填报菜单组件应用
+const rowFillMenuRef = ref<any>(null);
+//<--------- ref
 
-// 表格_填报配置信息_变量
-const fillConfig = {
-  fillAreaList :[],   // 填报区域列表
-
-};
-
-let setupFileCells = function (clickEvent, event, params) {
-  console.log(params.columnIndex,params.rowIndex);
-
-  // config.authority
+/**
+ * 显示行填报菜单
+ * @param x 要显示的x坐标位置
+ * @param y 要显示的y坐标位置
+ */
+const rowFillMenuShow = function (x: number, y: number) {
+  rowFillMenuRef.value.show(x, y);
 }
+
+/**
+ * 隐藏行填报菜单
+ */
+const rowFillMenuHidden = function (): void {
+  rowFillMenuRef.value.hidden();
+}
+
+/**
+ * 显示行填报菜单
+ */
+const getRowFillMenuWithAxis = function () {
+  return rowFillMenuRef.value.getRowFillAxis();
+}
+
+const getRowFillMenuIsShow = function () {
+  return rowFillMenuRef.value.isShow();
+}
+
+
+// 当前工作簿模式
+const workModel = localStorage.getItem('model') ? localStorage.getItem('model') : 'designModel';
+
+
+// 获取当前工作簿配置
+let fillDocInstance = ref<FillModelConfigger>();
+if (workModel === 'fillModel') { // 填报模式
+  let fillConfig = {
+    rowFillMenuShow: rowFillMenuShow,
+    rowFillMenuHidden: rowFillMenuHidden,
+    getRowFillMenuWithAxis: getRowFillMenuWithAxis,
+    getRowFillMenuIsShow: getRowFillMenuIsShow,
+  }
+  fillDocInstance.value = new FillModelConfigger(fillConfig);
+} else {  //设计模式
+  fillDocInstance.value = designModelSheetDefaultConfig.init();
+}
+const _sheetConfig = ref(fillDocInstance.value.docConfigJson);  // 表格_luckySheet配置信息_变量
+
 
 </script>
 
