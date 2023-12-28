@@ -95,7 +95,7 @@ const show = function (x: number, y: number) {
   // 2. 计算菜单位置，并显示
   let winH = document.documentElement.clientHeight,
       winW = document.documentElement.clientWidth;
-  let menuW = thisMenuDivRef.value.offsetWidth ,
+  let menuW = thisMenuDivRef.value.offestWidth ,
       menuH = thisMenuDivRef.value.offsetHeight ;
   let top = y,
       left = x;

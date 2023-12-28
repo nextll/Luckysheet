@@ -68,8 +68,7 @@ if (workModel === 'fillModel') { // 填报模式
 } else {  //设计模式
   fillDocInstance.value = designModelSheetDefaultConfig.init();
 }
-const _sheetConfig = ref(fillDocInstance.value.docConfigJson);  // 表格_luckySheet配置信息_变量
-
+const _sheetConfig = ref(fillDocInstance.value);  // 表格_luckySheet配置信息_变量
 
 </script>
 

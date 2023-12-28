@@ -132,6 +132,8 @@ const init = function (){
     let saveSheetConfig = [];
     if (store.getItem("sheetSave")){
         saveSheetConfig = JSON.parse(store.getItem("sheetSave"));
+    } else {
+        saveSheetConfig.push(window.fillData);
     }
 
     // 2. 生成Doc配置（LuckyConfig）

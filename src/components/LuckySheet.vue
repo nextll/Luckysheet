@@ -144,6 +144,7 @@ const downloadExcel = () => {
 // !!! create luckysheet after mounted
 onMounted(() => {
   let sheetConfig = props.sheetConfig;
+  console.log('sheetConfig', sheetConfig)
   sheetConfig.container = 'luckysheet';
   LuckyExcel.create(sheetConfig);
 })
