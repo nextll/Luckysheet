@@ -13,7 +13,7 @@ export interface FillConfig {
 
 export class FillModelConfigger {
 
-    // -------------------------------->> statci >>--------------------------------
+    // -------------------------------->> static >>--------------------------------
 
     // 工作簿配置模板_level1
     private static docConfigTemplate: object = {

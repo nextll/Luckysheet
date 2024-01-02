@@ -137,7 +137,7 @@ const init = function (){
     }
 
     // 2. 生成Doc配置（LuckyConfig）
-    let docConfig =  newDocConfigInstance(saveSheetConfig);
+    let docConfig =  {docConfigJson : newDocConfigInstance(saveSheetConfig)};
 
     //3. ret
     return docConfig;
